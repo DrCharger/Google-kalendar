@@ -14,7 +14,9 @@ function handleEventClick(event) {
 
 function removeEventsFromCalendar() {
 	// ф-ция для удаления всех событий с календаря
-	setItem('events', []);
+	document
+		.querySelectorAll('.task')
+		.forEach((elem) => elem.parentNode.removeChild(elem));
 }
 
 const createEventElement = (event) => {
@@ -23,6 +25,7 @@ const createEventElement = (event) => {
 	// нужно добавить id события в дата атрибут
 	// здесь для создания DOM элемента события используйте document.createElement
 	// let timeSLot = document.querySelector(`div[data-day = ''`);
+	removeEventsFromCalendar();
 	event.map(({ id, start, end, description, title }) => {
 		const timeSLot = document.querySelector(
 			`div[data-day = '${start.getDate()}`,
@@ -48,6 +51,7 @@ const createEventElement = (event) => {
 		descriptionTask.textContent = description;
 
 		task.append(titleTask, time, descriptionTask);
+
 		timeSLot.prepend(task);
 		return task;
 	});
@@ -77,6 +81,14 @@ function onDeleteEvent() {
 	// удаляем из массива нужное событие и записываем в storage новый массив
 	// закрыть попап
 	// перерисовать события на странице в соответствии с новым списком событий в storage (renderEvents)
+	const a = getItem('events').filter(
+		(elem) => elem.id !== getItem('eventIdToDelete'),
+	);
+	console.log(a);
+	setItem('events', a);
+	closePopup();
+	removeEventsFromCalendar();
+	renderEvents();
 }
 
 deleteEventBtn.addEventListener('click', onDeleteEvent);
