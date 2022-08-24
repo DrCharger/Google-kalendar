@@ -5,20 +5,49 @@ import { getStartOfWeek, getDisplayedMonth } from '../common/time.utils.js';
 
 const navElem = document.querySelector('.navigation');
 const displayedMonthElem = document.querySelector(
-  '.navigation__displayed-month'
+	'.navigation__displayed-month',
 );
 
 function renderCurrentMonth() {
-  // отрисовать месяц, к которому относиться текущая неделя (getDisplayedMonth)
-  // вставить в .navigation__displayed-month
+	// отрисовать месяц, к которому относиться текущая неделя (getDisplayedMonth)
+	// вставить в .navigation__displayed-month
+	displayedMonthElem.textContent = getDisplayedMonth(
+		getItem('displayedWeekStart'),
+	);
 }
+const right = document.querySelector('.fa-chevron-right');
+const left = document.querySelector('.fa-chevron-left');
+const today = document.querySelector('.navigation__today-btn');
 
 const onChangeWeek = (event) => {
-  // при переключении недели обновите displayedWeekStart в storage
-  // и перерисуйте все необходимые элементы страницы (renderHeader, renderWeek, renderCurrentMonth)
+	// при переключении недели обновите 'displayedWeekStart' в storage
+	// и перерисуйте все необходимые элементы страницы (renderHeader, renderWeek, renderCurrentMonth)
+	let a;
+	if (event.target === left) {
+		a = new Date(
+			new Date(getItem('displayedWeekStart')).setDate(
+				getItem('displayedWeekStart').getDate() - 7,
+			),
+		);
+	}
+	if (event.target === right) {
+		a = new Date(
+			new Date(getItem('displayedWeekStart')).setDate(
+				getItem('displayedWeekStart').getDate() + 7,
+			),
+		);
+	}
+	if (event.target === today) {
+		a = new Date();
+	}
+
+	setItem('displayedWeekStart', getStartOfWeek(a));
+	renderCurrentMonth();
+	renderHeader();
+	renderWeek();
 };
 
 export const initNavigation = () => {
-  renderCurrentMonth();
-  navElem.addEventListener('click', onChangeWeek);
+	renderCurrentMonth();
+	navElem.addEventListener('click', onChangeWeek);
 };

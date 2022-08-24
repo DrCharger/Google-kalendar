@@ -1,1 +1,25 @@
 // стили отображаемого в календаре события
+.task {
+	background-color: blue;
+	color: white;
+	width: 100%;
+	z-index: 1;
+	border: 1px dashed red;
+	border-radius: 20px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	text-align: center;
+	overflow: hidden;
+	&__title {
+		font-size: 1.5em;
+		margin: 0;
+	}
+	&__description {
+		font-size: 1em;
+	}
+	&__time {
+		display: block;
+		margin: 15px, auto;
+	}
+}

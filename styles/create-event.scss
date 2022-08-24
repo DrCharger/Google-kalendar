@@ -1,1 +1,40 @@
 // стили формы события внутри модального окна
+.modal {
+	&__content {
+		height: 350px;
+		width: 500px;
+		background-color: azure;
+	}
+}
+.create-event {
+	&__close-btn {
+		background-color: aqua;
+		margin-left: 440px;
+		border-radius: 10px;
+	}
+}
+.event-form {
+	height: 300px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	&__time {
+		display: flex;
+		justify-content: space-around;
+	}
+	&__field {
+		border: none;
+		height: 35px;
+		border-bottom: 3px solid rgba(0, 0, 255, 0.6);
+		background-color: azure;
+		&__description {
+			border: none;
+			height: 90px;
+			border-bottom: 3px solid rgba(0, 0, 255, 0.6);
+			background-color: azure;
+			display: block;
+			text-align: center;
+			line-height: 80px;
+		}
+	}
+}

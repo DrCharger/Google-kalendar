@@ -1,3 +1,7 @@
 export const createNumbersArray = (from, to) => {
-  // ф-ция должна генерировать массив чисел от from до to
+	const result = [];
+	for (let index = from; index <= to; index++) {
+		result.push(index);
+	}
+	return result;
 };

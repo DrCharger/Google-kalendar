@@ -53,7 +53,7 @@
 		<div class="modal hidden overlay">
 			<div class="modal__content">
 				<div class="create-event">
-					<button class="create-event__close-btn">+</button>
+					<button class="create-event__close-btn">X</button>
 					<form class="event-form">
 						<input
 							type="text"
@@ -64,13 +64,13 @@
 						<div class="event-form__time">
 							<input type="date" name="date" class="event-form__field" />
 							<input type="time" name="startTime" class="event-form__field" />
-							<span>-</span>
+							<!-- <span>  -  </span> -->
 							<input type="time" name="endTime" class="event-form__field" />
 						</div>
 						<textarea
 							name="description"
 							placeholder="Description"
-							class="event-form__field"
+							class="event-form__field__description"
 						></textarea>
 						<button type="submit" class="event-form__submit-btn">Create</button>
 					</form>

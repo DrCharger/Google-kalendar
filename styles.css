@@ -58,6 +58,164 @@
   display: none;
 }
 
+.header {
+  display: flex;
+  width: 1000px;
+  margin-top: 1%;
+  margin-bottom: 1%;
+}
+
+.button {
+  margin-left: 10%;
+  height: 60px;
+  width: 150px;
+  background-color: rgba(0, 0, 255, 0.582);
+  color: white;
+}
+
+.create-event-btn__icon {
+  background-image: linear-gradient(45deg, rgb(255, 0, 0) 0, rgb(241, 255, 0) 100%);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  margin-right: 10%;
+}
+
+.navigation {
+  display: flex;
+}
+.navigation__nav-icon {
+  margin-left: 5%;
+}
+.navigation__displayed-month {
+  margin-left: 5%;
+  line-height: 30px;
+}
+
+.calendar__header {
+  display: flex;
+  height: 130px;
+  max-width: 95%;
+  margin-left: 5%;
+  margin-right: 38px;
+}
+.calendar__body {
+  height: 100vh;
+  overflow: auto;
+}
+.calendar__week {
+  max-width: 95%;
+  height: 100vh;
+  display: flex;
+  flex-grow: 1;
+}
+.calendar__week-container {
+  display: flex;
+}
+.calendar__day {
+  height: 60px;
+  flex-grow: 1;
+  border-bottom: 1px solid grey;
+  opacity: 0.5;
+  position: relative;
+}
+.calendar__day-label {
+  flex-grow: 1;
+}
+.calendar__time-slot {
+  height: 60px;
+  border: 1px solid grey;
+  opacity: 0.5;
+}
+.calendar__time-scale {
+  background-color: azure;
+  width: 5%;
+}
+
+.time-slot {
+  height: 60px;
+  text-align: center;
+}
+.time-slot__time {
+  font-size: 1em;
+}
+
+.day-label {
+  align-items: center;
+  justify-content: space-around;
+  display: flex;
+  flex-direction: column;
+  background-color: azure;
+}
+.day-label__day-name {
+  font-size: 25px;
+}
+.day-label__day-number {
+  font-size: 35px;
+}
+
+.modal__content {
+  height: 350px;
+  width: 500px;
+  background-color: azure;
+}
+
+.create-event__close-btn {
+  background-color: aqua;
+  margin-left: 440px;
+  border-radius: 10px;
+}
+
+.event-form {
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.event-form__time {
+  display: flex;
+  justify-content: space-around;
+}
+.event-form__field {
+  border: none;
+  height: 35px;
+  border-bottom: 3px solid rgba(0, 0, 255, 0.6);
+  background-color: azure;
+}
+.event-form__field__description {
+  border: none;
+  height: 90px;
+  border-bottom: 3px solid rgba(0, 0, 255, 0.6);
+  background-color: azure;
+  display: block;
+  text-align: center;
+  line-height: 80px;
+}
+
+.task {
+  background-color: blue;
+  color: white;
+  width: 100%;
+  z-index: 1;
+  border: 1px dashed red;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  text-align: center;
+  overflow: hidden;
+}
+.task__title {
+  font-size: 1.5em;
+  margin: 0;
+}
+.task__description {
+  font-size: 1em;
+}
+.task__time {
+  display: block;
+  margin: 15px, auto;
+}
+
 * {
   box-sizing: border-box;
 }
