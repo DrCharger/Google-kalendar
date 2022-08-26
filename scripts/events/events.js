@@ -1,7 +1,6 @@
 import { getItem, setItem } from '../common/storage.js';
 import shmoment from '../common/shmoment.js';
 import { openPopup, closePopup } from '../common/popup.js';
-
 import { createNumbersArray } from '../common/createNumbersArray.js';
 
 const weekElem = document.querySelector('.calendar__week');
@@ -10,18 +9,18 @@ const deleteEventBtn = document.querySelector('.delete-event-btn');
 function handleEventClick(event) {
 	// если произошел клик по событию, то нужно паказать попап с кнопкой удаления
 	// установите eventIdToDelete с id события в storage
-	if (!event.target.hasAttribute('data-id')) {
-		return;
+	if (
+		event.target.hasAttribute('data-id') ||
+		event.target.hasAttribute('class = task')
+	) {
+		const x =
+			event.target.getBoundingClientRect().left +
+			event.target.getBoundingClientRect().width;
+		const y = event.target.getBoundingClientRect().top;
+		openPopup(x, y);
+		setItem('eventIdToDelete', event.target.dataset.id);
 	}
-	const x =
-		event.target.getBoundingClientRect().left +
-		event.target.getBoundingClientRect().width;
-	const y = event.target.getBoundingClientRect().top;
-
-	// const y = +event.target.style.top.split('px')[0] + 200;
-
-	openPopup(x, y);
-	setItem('eventIdToDelete', event.target.dataset.id);
+	return;
 }
 
 function removeEventsFromCalendar() {
@@ -52,7 +51,7 @@ const createEventElement = (event) => {
 			end.getMinutes() -
 			start.getMinutes()
 		}px`;
-		const titleTask = document.createElement('h5');
+		const titleTask = document.createElement('span');
 		titleTask.classList.add('task__title');
 		titleTask.textContent = title;
 		const time = document.createElement('span');
@@ -103,5 +102,4 @@ function onDeleteEvent() {
 }
 
 deleteEventBtn.addEventListener('click', onDeleteEvent);
-
 weekElem.addEventListener('click', handleEventClick);

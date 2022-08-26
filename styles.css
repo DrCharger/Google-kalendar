@@ -103,7 +103,7 @@
   margin-right: 38px;
 }
 .calendar__body {
-  height: 100vh;
+  height: 80vh;
   overflow: auto;
 }
 .calendar__week {
@@ -212,11 +212,6 @@
 .task__description {
   font-size: 1em;
 }
-.task__time {
-  display: block;
-  margin: 15px, auto;
-}
-
 * {
   box-sizing: border-box;
 }
