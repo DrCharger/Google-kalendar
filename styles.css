@@ -97,10 +97,10 @@
 
 .calendar__header {
   display: flex;
-  height: 130px;
+  height: 10%;
   max-width: 95%;
   margin-left: 5%;
-  margin-right: 38px;
+  margin-right: 2.5%;
 }
 .calendar__body {
   height: 80vh;
@@ -206,12 +206,16 @@
   box-shadow: 13px 8px 21px 7px rgba(0, 0, 0, 0.75);
 }
 .task__title {
-  font-size: 1.5em;
+  font-size: 0.75em;
   margin: 0;
 }
 .task__description {
-  font-size: 1em;
+  font-size: 0.75em;
 }
+.task__time {
+  font-size: 0.75em;
+}
+
 * {
   box-sizing: border-box;
 }

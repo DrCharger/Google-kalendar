@@ -11,14 +11,14 @@ function handleEventClick(event) {
 	// установите eventIdToDelete с id события в storage
 	if (
 		event.target.hasAttribute('data-id') ||
-		event.target.hasAttribute('class = task')
+		event.target.classList.contains('task__touch')
 	) {
 		const x =
-			event.target.getBoundingClientRect().left +
-			event.target.getBoundingClientRect().width;
+			event.target.closest('.task').getBoundingClientRect().left +
+			event.target.closest('.task').getBoundingClientRect().width;
 		const y = event.target.getBoundingClientRect().top;
 		openPopup(x, y);
-		setItem('eventIdToDelete', event.target.dataset.id);
+		setItem('eventIdToDelete', event.target.closest('.task').dataset.id);
 	}
 	return;
 }
@@ -43,6 +43,7 @@ const createEventElement = (event) => {
 		);
 		const task = document.createElement('div');
 		task.classList.add('task');
+		task.classList.add('task__touch');
 		task.setAttribute('data-id', id);
 		task.style.position = 'absolute';
 		task.style.top = `${start.getHours() * 60 + start.getMinutes()}px`;
@@ -53,12 +54,15 @@ const createEventElement = (event) => {
 		}px`;
 		const titleTask = document.createElement('span');
 		titleTask.classList.add('task__title');
+		titleTask.classList.add('task__touch');
 		titleTask.textContent = title;
 		const time = document.createElement('span');
 		time.classList.add('task__time');
+		time.classList.add('task__touch');
 		time.textContent = `${start.getHours()}:${start.getMinutes()} - ${end.getHours()}:${end.getMinutes()}`;
 		const descriptionTask = document.createElement('span');
 		descriptionTask.classList.add('task__description');
+		descriptionTask.classList.add('task__touch');
 		descriptionTask.textContent = description;
 
 		task.append(titleTask, time, descriptionTask);
