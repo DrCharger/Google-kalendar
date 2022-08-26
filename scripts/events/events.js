@@ -1,6 +1,7 @@
 import { getItem, setItem } from '../common/storage.js';
 import shmoment from '../common/shmoment.js';
 import { openPopup, closePopup } from '../common/popup.js';
+
 import { createNumbersArray } from '../common/createNumbersArray.js';
 
 const weekElem = document.querySelector('.calendar__week');

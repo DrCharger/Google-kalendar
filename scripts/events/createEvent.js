@@ -4,14 +4,15 @@ import { getDateTime } from '../common/time.utils.js';
 import { closeModal } from '../common/modal.js';
 
 const eventFormElem = document.querySelector('.event-form');
-const closeEventFormBtn = document.querySelector('.create-event__close-btn');
 const submitBtn = document.querySelector('.event-form__submit-btn');
 
 function clearEventForm() {
 	// ф-ция должна очистить поля формы от значений
-	document
-		.querySelectorAll('.event-form__field')
-		.forEach((elem) => (elem.value = ''));
+	document.querySelectorAll('.event-form__field').forEach((elem) => {
+		elem.value = '';
+		elem.removeAttribute('readonly');
+	});
+	document.querySelector('.event-form__field__description').value = '';
 }
 
 function onCloseEventForm() {
