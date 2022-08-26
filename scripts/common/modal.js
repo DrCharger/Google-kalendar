@@ -14,6 +14,9 @@ export function closeModal() {
 }
 
 function onClickInsideModal(event) {
+	event.target === document.querySelector('.create-event__close-btn')
+		? closeModal()
+		: console.log('NO');
 	event.stopPropagation();
 }
 

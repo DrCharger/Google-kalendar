@@ -1,6 +1,7 @@
 import { getItem, setItem } from '../common/storage.js';
 import shmoment from '../common/shmoment.js';
 import { openPopup, closePopup } from '../common/popup.js';
+import { createNumbersArray } from '../common/createNumbersArray.js';
 
 const weekElem = document.querySelector('.calendar__week');
 const deleteEventBtn = document.querySelector('.delete-event-btn');
@@ -8,7 +9,17 @@ const deleteEventBtn = document.querySelector('.delete-event-btn');
 function handleEventClick(event) {
 	// если произошел клик по событию, то нужно паказать попап с кнопкой удаления
 	// установите eventIdToDelete с id события в storage
-	openPopup();
+	if (!event.target.hasAttribute('data-id')) {
+		return;
+	}
+	const x =
+		event.target.getBoundingClientRect().left +
+		event.target.getBoundingClientRect().width;
+	const y = event.target.getBoundingClientRect().top;
+
+	// const y = +event.target.style.top.split('px')[0] + 200;
+
+	openPopup(x, y);
 	setItem('eventIdToDelete', event.target.dataset.id);
 }
 
@@ -25,7 +36,7 @@ const createEventElement = (event) => {
 	// нужно добавить id события в дата атрибут
 	// здесь для создания DOM элемента события используйте document.createElement
 	// let timeSLot = document.querySelector(`div[data-day = ''`);
-	removeEventsFromCalendar();
+
 	event.map(({ id, start, end, description, title }) => {
 		const timeSLot = document.querySelector(
 			`div[data-day = '${start.getDate()}`,
@@ -58,15 +69,15 @@ const createEventElement = (event) => {
 };
 
 export const renderEvents = () => {
-	let result = [];
-	const b = getItem('displayedWeekStart').getDate();
-	for (let i = b; i <= b + 6; i++) {
-		result.push(i);
-	}
-	let a = getItem('events').filter((elem) =>
-		result.includes(elem.start.getDate()),
+	removeEventsFromCalendar();
+	createEventElement(
+		getItem('events').filter((elem) =>
+			createNumbersArray(
+				getItem('displayedWeekStart').getDate(),
+				getItem('displayedWeekStart').getDate() + 6,
+			).includes(elem.start.getDate()),
+		),
 	);
-	createEventElement(a);
 	// достаем из storage все события и дату понедельника отображаемой недели
 	// фильтруем события, оставляем только те, что входят в текущую неделю
 	// создаем для них DOM элементы с помощью createEventElement
@@ -81,13 +92,12 @@ function onDeleteEvent() {
 	// удаляем из массива нужное событие и записываем в storage новый массив
 	// закрыть попап
 	// перерисовать события на странице в соответствии с новым списком событий в storage (renderEvents)
-	const a = getItem('events').filter(
-		(elem) => elem.id !== getItem('eventIdToDelete'),
+
+	setItem(
+		'events',
+		getItem('events').filter((elem) => elem.id !== getItem('eventIdToDelete')),
 	);
-	console.log(a);
-	setItem('events', a);
 	closePopup();
-	removeEventsFromCalendar();
 	renderEvents();
 }
 

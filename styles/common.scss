@@ -1,54 +1,58 @@
 .button {
-  height: 40px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  outline: none;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: 500;
+	height: 40px;
+	border-radius: 8px;
+	border: 1px solid #ccc;
+	outline: none;
+	cursor: pointer;
+	font-size: 16px;
+	font-weight: 500;
 }
 
 .icon-button {
-  outline: none;
-  border: none;
-  cursor: pointer;
-  background: transparent;
+	outline: none;
+	border: none;
+	cursor: pointer;
+	background: transparent;
 }
 
 .modal {
-  position: fixed;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+	position: fixed;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	box-shadow: 13px 8px 21px 7px rgba(0, 0, 0, 0.75);
 
-  &__content {
-    background: #fff;
-    padding: 16px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-  }
+	&__content {
+		padding: 16px;
+		border: 1px solid #ccc;
+		border-radius: 8px;
+		height: 350px;
+		width: 500px;
+		background-color: azure;
+		box-shadow: 13px 8px 21px 7px rgba(0, 0, 0, 0.75);
+	}
 }
 
 .overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: #cccccc45;
-  z-index: 10;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background-color: #cccccc45;
+	z-index: 10;
 }
 
 .popup {
-  &__content {
-    position: absolute;
-    background: #fff;
-    padding: 16px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-  }
+	&__content {
+		position: absolute;
+		background: #fff;
+		padding: 16px;
+		border: 1px solid #ccc;
+		border-radius: 8px;
+	}
 }
 
 .hidden {
-  display: none;
+	display: none;
 }

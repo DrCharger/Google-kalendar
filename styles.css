@@ -28,12 +28,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  box-shadow: 13px 8px 21px 7px rgba(0, 0, 0, 0.75);
 }
 .modal__content {
-  background: #fff;
   padding: 16px;
   border: 1px solid #ccc;
   border-radius: 8px;
+  height: 350px;
+  width: 500px;
+  background-color: azure;
+  box-shadow: 13px 8px 21px 7px rgba(0, 0, 0, 0.75);
 }
 
 .overlay {
@@ -153,12 +157,6 @@
   font-size: 35px;
 }
 
-.modal__content {
-  height: 350px;
-  width: 500px;
-  background-color: azure;
-}
-
 .create-event__close-btn {
   background-color: aqua;
   margin-left: 440px;
@@ -203,6 +201,9 @@
   justify-content: space-around;
   text-align: center;
   overflow: hidden;
+}
+.task:hover {
+  box-shadow: 13px 8px 21px 7px rgba(0, 0, 0, 0.75);
 }
 .task__title {
   font-size: 1.5em;

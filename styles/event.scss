@@ -1,6 +1,7 @@
 // стили отображаемого в календаре события
 .task {
 	background-color: blue;
+
 	color: white;
 	width: 100%;
 	z-index: 1;
@@ -11,6 +12,9 @@
 	justify-content: space-around;
 	text-align: center;
 	overflow: hidden;
+	&:hover {
+		box-shadow: 13px 8px 21px 7px rgba(0, 0, 0, 0.75);
+	}
 	&__title {
 		font-size: 1.5em;
 		margin: 0;

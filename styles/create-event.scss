@@ -1,11 +1,4 @@
 // стили формы события внутри модального окна
-.modal {
-	&__content {
-		height: 350px;
-		width: 500px;
-		background-color: azure;
-	}
-}
 .create-event {
 	&__close-btn {
 		background-color: aqua;
