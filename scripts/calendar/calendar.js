@@ -6,13 +6,17 @@ const generateDay = () => {
 	// функция должна сгенерировать и вернуть разметку дня в виде строки
 	// разметка состоит из 24 часовых временных слотов (.calendar__time-slot)
 	return createNumbersArray(0, 24)
-		.map(
-			(lineNumber) => `<div 
+		.map((lineNumber) => {
+			if (lineNumber < 10) {
+				lineNumber = `0${lineNumber}`;
+			}
+
+			return `<div 
                             class = 'calendar__time-slot'
                             data-time = '${lineNumber}'
                         
-                            ></div>`,
-		)
+                            ></div>`;
+		})
 		.join('');
 };
 const week = document.querySelector('.calendar__week');

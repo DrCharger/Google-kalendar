@@ -33,6 +33,7 @@ function onCreateEvent(event) {
 	const title = document.querySelector('input[name = title]').value;
 	const date = document.querySelector('input[name = date]').value;
 	const startTime = document.querySelector('input[name = startTime]').value;
+
 	const start = getDateTime(date, startTime);
 	const endTime = document.querySelector('input[name = endTime]').value;
 	const end = getDateTime(date, endTime);

@@ -99,7 +99,7 @@
   display: flex;
   height: 10%;
   max-width: 95%;
-  margin-left: 5%;
+  margin-left: 8%;
   margin-right: 2.5%;
 }
 .calendar__body {
@@ -132,7 +132,7 @@
 }
 .calendar__time-scale {
   background-color: azure;
-  width: 5%;
+  width: 8%;
 }
 
 .time-slot {
@@ -195,7 +195,6 @@
   width: 100%;
   z-index: 1;
   border: 1px dashed red;
-  border-radius: 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;

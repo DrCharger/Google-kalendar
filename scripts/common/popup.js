@@ -23,9 +23,9 @@ export function closePopup() {
 	popupElem.classList.add('hidden');
 }
 
-function onChangeEvent(event) {
+function onChangeEvent() {
 	closePopup();
-	openModalChange(event);
+	openModalChange();
 }
 
 function onClickInsidePopup(event) {

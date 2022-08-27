@@ -2,6 +2,7 @@ import { getItem, setItem } from '../common/storage.js';
 import shmoment from '../common/shmoment.js';
 import { openPopup, closePopup } from '../common/popup.js';
 import { createNumbersArray } from '../common/createNumbersArray.js';
+import { openModalSmallTask } from '../common/modal.js';
 
 const weekElem = document.querySelector('.calendar__week');
 const deleteEventBtn = document.querySelector('.delete-event-btn');
@@ -19,6 +20,8 @@ function handleEventClick(event) {
 		const y = event.target.getBoundingClientRect().top;
 		openPopup(x, y);
 		setItem('eventIdToDelete', event.target.closest('.task').dataset.id);
+	} else if (event.target.hasAttribute('data-time')) {
+		openModalSmallTask(event);
 	}
 	return;
 }

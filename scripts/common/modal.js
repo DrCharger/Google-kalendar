@@ -12,9 +12,17 @@ const changeDescription = document.querySelector(
 	'textarea[name = description]',
 );
 const changeDate = document.querySelector('input[name = date]');
+const changeStartTime = document.querySelector('input[name = startTime]');
+const changeEndTime = document.querySelector('input[name = endTime]');
 
 export function openModal() {
 	modalElem.classList.remove('hidden');
+	document.querySelector(
+		'input[name = startTime]',
+	).value = `${new Date().getHours()}:${new Date().getMinutes()}`;
+	document.querySelector(
+		'input[name = endTime]',
+	).value = `${new Date().getHours()}:${new Date().getMinutes()}`;
 }
 
 export function closeModal() {
@@ -44,5 +52,24 @@ export function openModalChange() {
 	const endTime = document.querySelector('input[name = endTime]').value;
 	a.end = getDateTime(changeDate.value, endTime);
 }
+
+export function openModalSmallTask(event) {
+	openModal();
+	changeDate.value = `${new Date().getFullYear()}-0${new Date().getMonth()}-${
+		event.target.closest('.calendar__day').dataset.day
+	}`;
+	changeDate.setAttribute('readonly', 'readonly');
+
+	changeStartTime.value = `${event.target.dataset.time}:00`;
+	changeStartTime.setAttribute('readonly', 'readonly');
+	let a = +event.target.dataset.time + 1;
+	if (a < 10) {
+		a = `0${a}`;
+	}
+
+	changeEndTime.value = `${a}:00`;
+	changeEndTime.setAttribute('readonly', 'readonly');
+}
+
 modalContentElem.addEventListener('click', onClickInsideModal);
 modalElem.addEventListener('click', closeModal);
