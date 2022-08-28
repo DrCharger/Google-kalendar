@@ -60,17 +60,19 @@
 							name="title"
 							placeholder="Title"
 							class="event-form__field"
+							required
 						/>
 						<div class="event-form__time">
-							<input type="date" name="date" class="event-form__field" />
-							<input type="time" name="startTime" class="event-form__field" />
+							<input type="date" name="date" class="event-form__field" required/>
+							<input type="time" name="startTime" class="event-form__field" required/>
 							<!-- <span>  -  </span> -->
-							<input type="time" name="endTime" class="event-form__field" />
+							<input type="time" name="endTime" class="event-form__field" required/>
 						</div>
 						<textarea
 							name="description"
 							placeholder="Description"
 							class="event-form__field__description"
+							required
 						></textarea>
 						<button type="submit" class="event-form__submit-btn">Create</button>
 					</form>
@@ -84,6 +86,7 @@
 			</div>
 		</div>
 		<script src="scripts/index.js" type="module"></script>
+		<script src="scripts/validation/validation.js" type="module"></script>
     </body>
 	</body>
 </html>

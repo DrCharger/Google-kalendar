@@ -101,7 +101,17 @@ function onDeleteEvent() {
 	// удаляем из массива нужное событие и записываем в storage новый массив
 	// закрыть попап
 	// перерисовать события на странице в соответствии с новым списком событий в storage (renderEvents)
+	let a = getItem('events').find(
+		(elem) => elem.id === getItem('eventIdToDelete'),
+	);
+	if (a.start.getDate() === new Date().getDate()) {
+		let from = a.start.getHours() * 60 + a.start.getMinutes();
+		let now = new Date().getHours() * 60 + new Date().getMinutes();
 
+		if (from - now < 15) {
+			return alert(`Can't delete this task. It will be in 15 minutes`);
+		}
+	}
 	setItem(
 		'events',
 		getItem('events').filter((elem) => elem.id !== getItem('eventIdToDelete')),

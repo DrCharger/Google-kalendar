@@ -17,12 +17,21 @@ const changeEndTime = document.querySelector('input[name = endTime]');
 
 export function openModal() {
 	modalElem.classList.remove('hidden');
+	let minutesAddZero = new Date().getMinutes();
+	if (minutesAddZero < 10) {
+		minutesAddZero = `0${minutesAddZero}`;
+	}
+	let monthAddZero = new Date().getMonth() + 1;
+	if (monthAddZero < 10) {
+		monthAddZero = `0${monthAddZero}`;
+	}
 	document.querySelector(
 		'input[name = startTime]',
-	).value = `${new Date().getHours()}:${new Date().getMinutes()}`;
+	).value = `${new Date().getHours()}:${minutesAddZero}`;
+
 	document.querySelector(
-		'input[name = endTime]',
-	).value = `${new Date().getHours()}:${new Date().getMinutes()}`;
+		'input[name = date]',
+	).value = `${new Date().getFullYear()}-${monthAddZero}-${new Date().getDate()}`;
 }
 
 export function closeModal() {

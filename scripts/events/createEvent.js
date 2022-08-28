@@ -2,9 +2,8 @@ import { getItem, setItem } from '../common/storage.js';
 import { renderEvents } from './events.js';
 import { getDateTime } from '../common/time.utils.js';
 import { closeModal } from '../common/modal.js';
-
 const eventFormElem = document.querySelector('.event-form');
-const submitBtn = document.querySelector('.event-form__submit-btn');
+const closeBtn = document.querySelector('.create-event__close-btn');
 
 function clearEventForm() {
 	// ф-ция должна очистить поля формы от значений
@@ -60,4 +59,5 @@ export function initEventForm() {
 	// подпишитесь на сабмит формы и на закрытие формы
 }
 
-submitBtn.addEventListener('click', onCreateEvent);
+eventFormElem.addEventListener('submit', onCreateEvent);
+closeBtn.addEventListener('click', onCloseEventForm);
