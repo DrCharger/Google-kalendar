@@ -13,6 +13,9 @@ function clearEventForm() {
 		elem.removeAttribute('readonly');
 	});
 	document.querySelector('.event-form__field__description').value = '';
+	document
+		.querySelector('.event-form__field__description')
+		.removeAttribute('readonly');
 }
 
 function onCloseEventForm() {
@@ -33,10 +36,15 @@ function onCreateEvent(event) {
 	const title = document.querySelector('input[name = title]').value;
 	const date = document.querySelector('input[name = date]').value;
 	const startTime = document.querySelector('input[name = startTime]').value;
-
 	const start = getDateTime(date, startTime);
+	start.getMinutes() % 15 === 0
+		? start
+		: start.setMinutes(start.getMinutes() - (start.getMinutes() % 15));
 	const endTime = document.querySelector('input[name = endTime]').value;
 	const end = getDateTime(date, endTime);
+	end.getMinutes() % 15 === 0
+		? end
+		: end.setMinutes(end.getMinutes() - (end.getMinutes() % 15));
 	const description = document.querySelector(
 		'textarea[name = description]',
 	).value;

@@ -42,7 +42,9 @@ const createEventElement = (event) => {
 
 	event.map(({ id, start, end, description, title }) => {
 		const timeSLot = document.querySelector(
-			`div[data-day = '${start.getDate()}`,
+			`div[data-day = '${start.getDate()}'][data-month = '${
+				start.getMonth() + 1
+			}'] `,
 		);
 		const task = document.createElement('div');
 		task.classList.add('task');

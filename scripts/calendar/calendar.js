@@ -27,11 +27,13 @@ export const renderWeek = () => {
 	// каждый день должен содержать в дата атрибуте порядковый номер дня в месяце
 	// после того, как отрисовали всю сетку для отображаемой недели, нужно отобразить события этой недели с помощью renderEvents
 	const time = generateDay();
+
 	const weekRange = generateWeekRange(getItem('displayedWeekStart'))
 		.map(
 			(weekNumber) => `<div 
                             class = 'calendar__day'
                             data-day = '${weekNumber.getDate()}'
+							data-month = '${weekNumber.getMonth() + 1}'
                             >${time}</div>`,
 		)
 		.join('');

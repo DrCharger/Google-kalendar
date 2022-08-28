@@ -45,7 +45,11 @@ export function openModalChange() {
 	changeTitle.setAttribute('readonly', 'readonly');
 	changeDescription.value = a.description;
 	changeDescription.setAttribute('readonly', 'readonly');
-	changeDate.value = `${a.start.getFullYear()}-0${a.start.getMonth()}-${a.start.getDate()}`;
+	let monthAddZero = a.start.getMonth() + 1;
+	if (monthAddZero < 10) {
+		monthAddZero = `0${monthAddZero}`;
+	}
+	changeDate.value = `${a.start.getFullYear()}-${monthAddZero}-${a.start.getDate()}`;
 	changeDate.setAttribute('readonly', 'readonly');
 	const startTime = document.querySelector('input[name = startTime]').value;
 	a.start = getDateTime(changeDate.value, startTime);
@@ -55,9 +59,9 @@ export function openModalChange() {
 
 export function openModalSmallTask(event) {
 	openModal();
-	changeDate.value = `${new Date().getFullYear()}-0${new Date().getMonth()}-${
-		event.target.closest('.calendar__day').dataset.day
-	}`;
+	changeDate.value = `${new Date().getFullYear()}-0${
+		event.target.closest('.calendar__day').dataset.month
+	}-${event.target.closest('.calendar__day').dataset.day}`;
 	changeDate.setAttribute('readonly', 'readonly');
 
 	changeStartTime.value = `${event.target.dataset.time}:00`;
