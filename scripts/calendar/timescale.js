@@ -19,3 +19,32 @@ export const renderTimescale = () => {
 
 	timeScale.innerHTML = time;
 };
+
+export const redLine = () => {
+	const timeSLot = document.querySelector(
+		`div[data-day = '${new Date().getDate()}'][data-month = '${
+			new Date().getMonth() + 1
+		}'] `,
+	);
+	const timeLine = document.createElement('div');
+	timeLine.classList.add('red__line');
+	timeLine.style.top = `${
+		new Date().getHours() * 60 + new Date().getMinutes()
+	}px`;
+	timeSLot.prepend(timeLine);
+};
+let start = new Date().getHours() * 60 + new Date().getMinutes();
+const endTime = 1440 - start;
+
+export const anim = () => {
+	const timeLine = document.querySelector('.red__line');
+	let timer = setInterval(function () {
+		let timePassed =
+			new Date().getHours() * 60 + new Date().getMinutes() - start;
+		timeLine.style.top = start + timePassed + 'px';
+		if (timePassed >= endTime) {
+			clearInterval(timer);
+			return;
+		}
+	}, 1000);
+};

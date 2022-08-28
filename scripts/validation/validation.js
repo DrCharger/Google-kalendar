@@ -1,7 +1,7 @@
-import { setItem, getItem } from '../common/storage.js';
+import { getItem } from '../common/storage.js';
 import { createNumbersArray } from '../common/createNumbersArray.js';
 
-const startTimeInputElem = document.querySelector('input[name = startTime]');
+// const startTimeInputElem = document.querySelector('input[name = startTime]');
 const endTimeInputElem = document.querySelector('input[name = endTime]');
 const submitBtn = document.querySelector('.event-form__submit-btn');
 

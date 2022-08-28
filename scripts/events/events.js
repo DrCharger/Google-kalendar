@@ -3,6 +3,7 @@ import shmoment from '../common/shmoment.js';
 import { openPopup, closePopup } from '../common/popup.js';
 import { createNumbersArray } from '../common/createNumbersArray.js';
 import { openModalSmallTask } from '../common/modal.js';
+import { redLine, anim } from '../calendar/timescale.js';
 
 const weekElem = document.querySelector('.calendar__week');
 const deleteEventBtn = document.querySelector('.delete-event-btn');
@@ -87,6 +88,8 @@ export const renderEvents = () => {
 			).includes(elem.start.getDate()),
 		),
 	);
+	redLine();
+	anim();
 	// достаем из storage все события и дату понедельника отображаемой недели
 	// фильтруем события, оставляем только те, что входят в текущую неделю
 	// создаем для них DOM элементы с помощью createEventElement

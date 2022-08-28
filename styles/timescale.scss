@@ -1,4 +1,7 @@
 // стили боковой временной шкалы
 .red__line {
 	border-bottom: 3px solid red;
+	position: absolute;
+	width: 100%;
+	z-index: 25;
 }
