@@ -21,10 +21,6 @@ export const renderTimescale = () => {
 };
 
 export const redLine = () => {
-	const arr = generateWeekRange(getItem('displayedWeekStart')).map((elem) =>
-		elem.getDate(),
-	);
-
 	const timeSLot = document.querySelector(
 		`div[data-day = '${new Date().getDate()}'][data-month = '${
 			new Date().getMonth() + 1
@@ -33,12 +29,6 @@ export const redLine = () => {
 
 	const timeLine = document.createElement('div');
 	timeLine.classList.add('red__line');
-	// if (arr.includes(timeSLot.dataset.day)) {
-	// 	timeLine.style.top = `${
-	// 		new Date().getHours() * 60 + new Date().getMinutes()
-	// 	}px`;
-	// }
-
 	timeSLot.prepend(timeLine);
 };
 
@@ -55,5 +45,5 @@ export const anim = () => {
 			clearInterval(timer);
 			return;
 		}
-	}, 1000);
+	}, 50);
 };
