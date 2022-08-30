@@ -39,5 +39,6 @@ export const renderWeek = () => {
 		.join('');
 
 	week.innerHTML = weekRange;
+
 	renderEvents();
 };

@@ -96,11 +96,18 @@ export const renderEvents = () => {
 				.includes(elem.start.getDate()),
 		),
 	);
-	document
-		.querySelectorAll('.red__line')
-		.forEach((elem) => elem.parentNode.removeChild(elem));
-	redLine();
-	anim();
+	const a = document.querySelector(
+		`div[data-day = '${new Date().getDate()}'][data-month = '${
+			new Date().getMonth() + 1
+		}'] `,
+	);
+	if (a === null) {
+		return;
+	}
+	if (a.childNodes[0] !== document.querySelector('.red__line')) {
+		redLine();
+		anim();
+	}
 
 	// достаем из storage все события и дату понедельника отображаемой недели
 	// фильтруем события, оставляем только те, что входят в текущую неделю

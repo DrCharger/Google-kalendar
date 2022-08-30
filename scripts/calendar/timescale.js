@@ -33,11 +33,11 @@ export const redLine = () => {
 
 	const timeLine = document.createElement('div');
 	timeLine.classList.add('red__line');
-	if (arr.includes(timeSLot.dataset.day)) {
-		timeLine.style.top = `${
-			new Date().getHours() * 60 + new Date().getMinutes()
-		}px`;
-	}
+	// if (arr.includes(timeSLot.dataset.day)) {
+	// 	timeLine.style.top = `${
+	// 		new Date().getHours() * 60 + new Date().getMinutes()
+	// 	}px`;
+	// }
 
 	timeSLot.prepend(timeLine);
 };
