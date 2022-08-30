@@ -1,5 +1,6 @@
-import { getItem, setItem } from '../common/storage.js';
+import { getItem } from '../common/storage.js';
 import { getDateTime } from '../common/time.utils.js';
+import { addZero } from './createNumbersArray.js';
 
 const modalElem = document.querySelector('.modal');
 const modalContentElem = document.querySelector('.modal__content');
@@ -18,20 +19,18 @@ const changeEndTime = document.querySelector('input[name = endTime]');
 export function openModal() {
 	modalElem.classList.remove('hidden');
 	let minutesAddZero = new Date().getMinutes();
-	if (minutesAddZero < 10) {
-		minutesAddZero = `0${minutesAddZero}`;
-	}
+	minutesAddZero = addZero(minutesAddZero);
 	let monthAddZero = new Date().getMonth() + 1;
-	if (monthAddZero < 10) {
-		monthAddZero = `0${monthAddZero}`;
-	}
+	monthAddZero = addZero(monthAddZero);
+	let dayAddZero = new Date().getDate();
+	dayAddZero = addZero(dayAddZero);
 	document.querySelector(
 		'input[name = startTime]',
 	).value = `${new Date().getHours()}:${minutesAddZero}`;
 
 	document.querySelector(
 		'input[name = date]',
-	).value = `${new Date().getFullYear()}-${monthAddZero}-${new Date().getDate()}`;
+	).value = `${new Date().getFullYear()}-${monthAddZero}-${dayAddZero}`;
 }
 
 export function closeModal() {
@@ -41,7 +40,7 @@ export function closeModal() {
 function onClickInsideModal(event) {
 	event.target === document.querySelector('.create-event__close-btn')
 		? closeModal()
-		: console.log();
+		: undefined;
 	event.stopPropagation();
 }
 
@@ -55,32 +54,48 @@ export function openModalChange() {
 	changeDescription.value = a.description;
 	changeDescription.setAttribute('readonly', 'readonly');
 	let monthAddZero = a.start.getMonth() + 1;
-	if (monthAddZero < 10) {
-		monthAddZero = `0${monthAddZero}`;
-	}
-	changeDate.value = `${a.start.getFullYear()}-${monthAddZero}-${a.start.getDate()}`;
+	monthAddZero = addZero(monthAddZero);
+	let dayAddZero = a.start.getDate();
+	dayAddZero = addZero(dayAddZero);
+	changeDate.value = `${a.start.getFullYear()}-${monthAddZero}-${dayAddZero}`;
 	changeDate.setAttribute('readonly', 'readonly');
-	const startTime = document.querySelector('input[name = startTime]').value;
+	let startMinutesAddZero = a.start.getMinutes();
+	startMinutesAddZero = addZero(startMinutesAddZero);
+	let startHoursAddZero = a.start.getHours();
+	startHoursAddZero = addZero(startHoursAddZero);
+	document.querySelector(
+		'input[name = startTime]',
+	).value = `${startHoursAddZero}:${startMinutesAddZero}`;
+	let startTime = document.querySelector('input[name = startTime]').value;
+
 	a.start = getDateTime(changeDate.value, startTime);
-	const endTime = document.querySelector('input[name = endTime]').value;
+	let endMinutesAddZero = a.end.getMinutes();
+	endMinutesAddZero = addZero(endMinutesAddZero);
+	let endHoursAddZero = a.end.getHours();
+	endHoursAddZero = addZero(endHoursAddZero);
+	document.querySelector(
+		'input[name = endTime]',
+	).value = `${endHoursAddZero}:${endMinutesAddZero}`;
+	let endTime = document.querySelector('input[name = endTime]').value;
 	a.end = getDateTime(changeDate.value, endTime);
 }
 
 export function openModalSmallTask(event) {
 	openModal();
-	changeDate.value = `${new Date().getFullYear()}-0${
-		event.target.closest('.calendar__day').dataset.month
-	}-${event.target.closest('.calendar__day').dataset.day}`;
+	let monthAddZero = event.target.closest('.calendar__day').dataset.month;
+	let dayAddZero = event.target.closest('.calendar__day').dataset.day;
+	monthAddZero = addZero(monthAddZero);
+	dayAddZero = addZero(dayAddZero);
+
+	changeDate.value = `${new Date().getFullYear()}-${monthAddZero}-${dayAddZero}`;
 	changeDate.setAttribute('readonly', 'readonly');
 
 	changeStartTime.value = `${event.target.dataset.time}:00`;
 	changeStartTime.setAttribute('readonly', 'readonly');
-	let a = +event.target.dataset.time + 1;
-	if (a < 10) {
-		a = `0${a}`;
-	}
+	let hoursAddZero = +event.target.dataset.time + 1;
+	hoursAddZero = addZero(hoursAddZero);
 
-	changeEndTime.value = `${a}:00`;
+	changeEndTime.value = `${hoursAddZero}:00`;
 	changeEndTime.setAttribute('readonly', 'readonly');
 }
 

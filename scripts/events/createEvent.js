@@ -1,4 +1,4 @@
-import { getItem, setItem } from '../common/storage.js';
+import { getItem } from '../common/storage.js';
 import { renderEvents } from './events.js';
 import { getDateTime } from '../common/time.utils.js';
 import { closeModal } from '../common/modal.js';
@@ -48,16 +48,13 @@ function onCreateEvent(event) {
 		'textarea[name = description]',
 	).value;
 	const id = `0.${Date.parse(start)}`;
-	// console.log(getItem('events'));
+
 	getItem('events').push({ id, start, end, title, description });
-	// console.log(getItem('events'));
 	onCloseEventForm();
 	renderEvents();
 }
 
-export function initEventForm() {
-	// подпишитесь на сабмит формы и на закрытие формы
-}
+export function initEventForm() {}
 
 eventFormElem.addEventListener('submit', onCreateEvent);
 closeBtn.addEventListener('click', onCloseEventForm);

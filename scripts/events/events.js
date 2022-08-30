@@ -1,7 +1,6 @@
 import { getItem, setItem } from '../common/storage.js';
-import shmoment from '../common/shmoment.js';
 import { openPopup, closePopup } from '../common/popup.js';
-import { createNumbersArray } from '../common/createNumbersArray.js';
+import { generateWeekRange } from '../common/time.utils.js';
 import { openModalSmallTask } from '../common/modal.js';
 import { redLine, anim } from '../calendar/timescale.js';
 
@@ -15,9 +14,19 @@ function handleEventClick(event) {
 		event.target.hasAttribute('data-id') ||
 		event.target.classList.contains('task__touch')
 	) {
-		const x =
-			event.target.closest('.task').getBoundingClientRect().left +
-			event.target.closest('.task').getBoundingClientRect().width;
+		let x;
+		if (
+			event.target.closest('.task').getBoundingClientRect().x <
+			document.querySelector('.page').getBoundingClientRect().width / 2
+		) {
+			x =
+				event.target.closest('.task').getBoundingClientRect().left +
+				event.target.closest('.task').getBoundingClientRect().width;
+		} else {
+			x =
+				event.target.closest('.task').getBoundingClientRect().left -
+				event.target.closest('.task').getBoundingClientRect().width;
+		}
 		const y = event.target.getBoundingClientRect().top;
 		openPopup(x, y);
 		setItem('eventIdToDelete', event.target.closest('.task').dataset.id);
@@ -82,14 +91,17 @@ export const renderEvents = () => {
 	removeEventsFromCalendar();
 	createEventElement(
 		getItem('events').filter((elem) =>
-			createNumbersArray(
-				getItem('displayedWeekStart').getDate(),
-				getItem('displayedWeekStart').getDate() + 6,
-			).includes(elem.start.getDate()),
+			generateWeekRange(getItem('displayedWeekStart'))
+				.map((elem) => elem.getDate())
+				.includes(elem.start.getDate()),
 		),
 	);
+	document
+		.querySelectorAll('.red__line')
+		.forEach((elem) => elem.parentNode.removeChild(elem));
 	redLine();
 	anim();
+
 	// достаем из storage все события и дату понедельника отображаемой недели
 	// фильтруем события, оставляем только те, что входят в текущую неделю
 	// создаем для них DOM элементы с помощью createEventElement
@@ -104,11 +116,11 @@ function onDeleteEvent() {
 	// удаляем из массива нужное событие и записываем в storage новый массив
 	// закрыть попап
 	// перерисовать события на странице в соответствии с новым списком событий в storage (renderEvents)
-	let a = getItem('events').find(
+	let findedElem = getItem('events').find(
 		(elem) => elem.id === getItem('eventIdToDelete'),
 	);
-	if (a.start.getDate() === new Date().getDate()) {
-		let from = a.start.getHours() * 60 + a.start.getMinutes();
+	if (findedElem.start.getDate() === new Date().getDate()) {
+		let from = findedElem.start.getHours() * 60 + findedElem.start.getMinutes();
 		let now = new Date().getHours() * 60 + new Date().getMinutes();
 
 		if (from - now < 15) {

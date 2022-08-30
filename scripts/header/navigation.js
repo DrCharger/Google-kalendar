@@ -15,32 +15,29 @@ function renderCurrentMonth() {
 		getItem('displayedWeekStart'),
 	);
 }
-// const right = document.querySelector('.fa-chevron-right');
-// const left = document.querySelector('.fa-chevron-left');
-// const today = document.querySelector('.navigation__today-btn');
 
 const onChangeWeek = (event) => {
 	// при переключении недели обновите 'displayedWeekStart' в storage
 	// и перерисуйте все необходимые элементы страницы (renderHeader, renderWeek, renderCurrentMonth)
-	let a;
+	let thisWeek;
 	if (event.target.closest('button').dataset.direction === 'prev') {
-		a = new Date(
+		thisWeek = new Date(
 			new Date(getItem('displayedWeekStart')).setDate(
 				getItem('displayedWeekStart').getDate() - 7,
 			),
 		);
 	}
 	if (event.target.closest('button').dataset.direction === 'next') {
-		a = new Date(
+		thisWeek = new Date(
 			new Date(getItem('displayedWeekStart')).setDate(
 				getItem('displayedWeekStart').getDate() + 7,
 			),
 		);
 	}
 	if (event.target.closest('button').dataset.direction === 'today') {
-		a = new Date();
+		thisWeek = new Date();
 	}
-	setItem('displayedWeekStart', getStartOfWeek(a));
+	setItem('displayedWeekStart', getStartOfWeek(thisWeek));
 	renderCurrentMonth();
 	renderHeader();
 	renderWeek();

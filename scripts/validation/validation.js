@@ -26,6 +26,7 @@ const validation = () => {
 
 const crossTasks = () => {
 	const endTimeInputElem = document.querySelector('input[name = endTime]');
+	const startTimeInputElem = document.querySelector('input[name = startTime]');
 	const dateInputElem = document.querySelector('input[name = date]');
 	const dateForFilter = new Date(dateInputElem.value);
 	let a = getItem('events')
@@ -36,13 +37,20 @@ const crossTasks = () => {
 			return (elem = createNumbersArray(from, to));
 		});
 
-	let b =
+	let crossEnd =
 		+endTimeInputElem.value.split(':')[0] * 60 +
 		+endTimeInputElem.value.split(':')[1];
+	let crossStart =
+		+startTimeInputElem.value.split(':')[0] * 60 +
+		+startTimeInputElem.value.split(':')[1];
 
-	if (a.find((elem) => elem.find((i) => i === b))) {
+	if (a.find((elem) => elem.includes(crossEnd))) {
 		alert('You have task at this time');
 		endTimeInputElem.value = '';
+	}
+	if (a.find((elem) => elem.includes(crossStart))) {
+		alert('You have task at this time');
+		startTimeInputElem.value = '';
 	}
 };
 

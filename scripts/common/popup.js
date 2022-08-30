@@ -2,7 +2,6 @@ import { openModalChange } from '../common/modal.js';
 
 const popupElem = document.querySelector('.popup');
 const popupContentElem = document.querySelector('.popup__content');
-let changeEventBtn;
 
 // в попап нужно передавать координаты, в которых показать попап
 export function openPopup(x, y) {
@@ -14,7 +13,7 @@ export function openPopup(x, y) {
 		changer.classList.add('change-event-btn');
 		changer.textContent = 'Change your info';
 		popupContentElem.append(changer);
-		changeEventBtn = document.querySelector('.change-event-btn');
+		let changeEventBtn = document.querySelector('.change-event-btn');
 		changeEventBtn.addEventListener('click', onChangeEvent);
 	}
 }

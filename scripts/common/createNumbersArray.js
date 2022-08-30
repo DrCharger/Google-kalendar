@@ -5,3 +5,10 @@ export const createNumbersArray = (from, to) => {
 	}
 	return result;
 };
+
+export const addZero = (arg) => {
+	if (arg < 10) {
+		arg = `0${arg}`;
+	}
+	return arg;
+};

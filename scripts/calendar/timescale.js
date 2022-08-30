@@ -1,5 +1,6 @@
 import { createNumbersArray } from '../common/createNumbersArray.js';
-
+import { generateWeekRange } from '../common/time.utils.js';
+import { getItem } from '../common/storage.js';
 const timeScale = document.querySelector('.calendar__time-scale');
 
 export const renderTimescale = () => {
@@ -16,23 +17,31 @@ export const renderTimescale = () => {
                               class = 'time-slot__time'>${time} AM</span></div>`;
 		})
 		.join('');
-
 	timeScale.innerHTML = time;
 };
 
 export const redLine = () => {
+	const arr = generateWeekRange(getItem('displayedWeekStart')).map((elem) =>
+		elem.getDate(),
+	);
+
 	const timeSLot = document.querySelector(
 		`div[data-day = '${new Date().getDate()}'][data-month = '${
 			new Date().getMonth() + 1
 		}'] `,
 	);
+
 	const timeLine = document.createElement('div');
 	timeLine.classList.add('red__line');
-	timeLine.style.top = `${
-		new Date().getHours() * 60 + new Date().getMinutes()
-	}px`;
+	if (arr.includes(timeSLot.dataset.day)) {
+		timeLine.style.top = `${
+			new Date().getHours() * 60 + new Date().getMinutes()
+		}px`;
+	}
+
 	timeSLot.prepend(timeLine);
 };
+
 let start = new Date().getHours() * 60 + new Date().getMinutes();
 const endTime = 1440 - start;
 
