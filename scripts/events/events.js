@@ -51,9 +51,12 @@ const createEventElement = (event) => {
 	// let timeSLot = document.querySelector(`div[data-day = ''`);
 
 	event.map(({ id, start, end, description, title }) => {
+		const aStart = new Date(start);
+		const aEnd = new Date(end);
+
 		const timeSLot = document.querySelector(
-			`div[data-day = '${start.getDate()}'][data-month = '${
-				start.getMonth() + 1
+			`div[data-day = '${aStart.getDate()}'][data-month = '${
+				aStart.getMonth() + 1
 			}'] `,
 		);
 		const task = document.createElement('div');
@@ -61,11 +64,11 @@ const createEventElement = (event) => {
 		task.classList.add('task__touch');
 		task.setAttribute('data-id', id);
 		task.style.position = 'absolute';
-		task.style.top = `${start.getHours() * 60 + start.getMinutes()}px`;
+		task.style.top = `${aStart.getHours() * 60 + aStart.getMinutes()}px`;
 		task.style.height = `${
-			(end.getHours() - start.getHours()) * 60 +
-			end.getMinutes() -
-			start.getMinutes()
+			(aEnd.getHours() - aStart.getHours()) * 60 +
+			aEnd.getMinutes() -
+			aStart.getMinutes()
 		}px`;
 		const titleTask = document.createElement('span');
 		titleTask.classList.add('task__title');
@@ -74,7 +77,7 @@ const createEventElement = (event) => {
 		const time = document.createElement('span');
 		time.classList.add('task__time');
 		time.classList.add('task__touch');
-		time.textContent = `${start.getHours()}:${start.getMinutes()} - ${end.getHours()}:${end.getMinutes()}`;
+		time.textContent = `${aStart.getHours()}:${aStart.getMinutes()} - ${aEnd.getHours()}:${aEnd.getMinutes()}`;
 		const descriptionTask = document.createElement('span');
 		descriptionTask.classList.add('task__description');
 		descriptionTask.classList.add('task__touch');
@@ -89,11 +92,12 @@ const createEventElement = (event) => {
 
 export const renderEvents = () => {
 	removeEventsFromCalendar();
+	const b = getItem('events') || [];
 	createEventElement(
-		getItem('events').filter((elem) =>
+		b.filter((elem) =>
 			generateWeekRange(getItem('displayedWeekStart'))
 				.map((elem) => elem.getDate())
-				.includes(elem.start.getDate()),
+				.includes(new Date(elem.start).getDate()),
 		),
 	);
 	const a = document.querySelector(
@@ -118,7 +122,7 @@ export const renderEvents = () => {
 	// не забудьте удалить с календаря старые события перед добавлением новых
 };
 
-function onDeleteEvent() {
+export function onDeleteEvent() {
 	// достаем из storage массив событий и eventIdToDelete
 	// удаляем из массива нужное событие и записываем в storage новый массив
 	// закрыть попап
@@ -126,8 +130,10 @@ function onDeleteEvent() {
 	let findedElem = getItem('events').find(
 		(elem) => elem.id === getItem('eventIdToDelete'),
 	);
-	if (findedElem.start.getDate() === new Date().getDate()) {
-		let from = findedElem.start.getHours() * 60 + findedElem.start.getMinutes();
+	if (new Date(findedElem.start).getDate() === new Date().getDate()) {
+		let from =
+			new Date(findedElem.start).getHours() * 60 +
+			new Date(findedElem.start).getMinutes();
 		let now = new Date().getHours() * 60 + new Date().getMinutes();
 
 		if (from - now < 15) {

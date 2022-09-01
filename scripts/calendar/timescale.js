@@ -1,6 +1,4 @@
 import { createNumbersArray } from '../common/createNumbersArray.js';
-import { generateWeekRange } from '../common/time.utils.js';
-import { getItem } from '../common/storage.js';
 const timeScale = document.querySelector('.calendar__time-scale');
 
 export const renderTimescale = () => {

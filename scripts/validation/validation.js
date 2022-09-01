@@ -29,11 +29,17 @@ const crossTasks = () => {
 	const startTimeInputElem = document.querySelector('input[name = startTime]');
 	const dateInputElem = document.querySelector('input[name = date]');
 	const dateForFilter = new Date(dateInputElem.value);
-	let a = getItem('events')
-		.filter((elem) => elem.start.getDate() === dateForFilter.getDate())
+	let a = getItem('events') || [];
+	const b = a
+		.filter(
+			(elem) => new Date(elem.start).getDate() === dateForFilter.getDate(),
+		)
 		.map((elem) => {
-			const from = elem.start.getHours() * 60 + (elem.start.getMinutes() % 15);
-			const to = elem.end.getHours() * 60 + elem.end.getMinutes();
+			const from =
+				new Date(elem.start).getHours() * 60 +
+				(new Date(elem.start).getMinutes() % 15);
+			const to =
+				new Date(elem.end).getHours() * 60 + new Date(elem.end).getMinutes();
 			return (elem = createNumbersArray(from, to));
 		});
 
@@ -44,11 +50,11 @@ const crossTasks = () => {
 		+startTimeInputElem.value.split(':')[0] * 60 +
 		+startTimeInputElem.value.split(':')[1];
 
-	if (a.find((elem) => elem.includes(crossEnd))) {
+	if (b.find((elem) => elem.includes(crossEnd))) {
 		alert('You have task at this time');
 		endTimeInputElem.value = '';
 	}
-	if (a.find((elem) => elem.includes(crossStart))) {
+	if (b.find((elem) => elem.includes(crossStart))) {
 		alert('You have task at this time');
 		startTimeInputElem.value = '';
 	}

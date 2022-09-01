@@ -12,7 +12,7 @@ function renderCurrentMonth() {
 	// отрисовать месяц, к которому относиться текущая неделя (getDisplayedMonth)
 	// вставить в .navigation__displayed-month
 	displayedMonthElem.textContent = getDisplayedMonth(
-		getItem('displayedWeekStart'),
+		new Date(getItem('displayedWeekStart')),
 	);
 }
 
@@ -23,14 +23,14 @@ const onChangeWeek = (event) => {
 	if (event.target.closest('button').dataset.direction === 'prev') {
 		thisWeek = new Date(
 			new Date(getItem('displayedWeekStart')).setDate(
-				getItem('displayedWeekStart').getDate() - 7,
+				new Date(getItem('displayedWeekStart')).getDate() - 7,
 			),
 		);
 	}
 	if (event.target.closest('button').dataset.direction === 'next') {
 		thisWeek = new Date(
 			new Date(getItem('displayedWeekStart')).setDate(
-				getItem('displayedWeekStart').getDate() + 7,
+				new Date(getItem('displayedWeekStart')).getDate() + 7,
 			),
 		);
 	}

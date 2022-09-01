@@ -1,4 +1,4 @@
-import { getItem } from '../common/storage.js';
+import { getItem, setItem } from '../common/storage.js';
 import { renderEvents } from './events.js';
 import { getDateTime } from '../common/time.utils.js';
 import { closeModal } from '../common/modal.js';
@@ -49,7 +49,9 @@ function onCreateEvent(event) {
 	).value;
 	const id = `0.${Date.parse(start)}`;
 
-	getItem('events').push({ id, start, end, title, description });
+	const c = getItem('events') || [];
+	c.push({ id, start, end, title, description });
+	setItem('events', c);
 	onCloseEventForm();
 	renderEvents();
 }

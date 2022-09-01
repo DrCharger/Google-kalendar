@@ -15,7 +15,8 @@ export const renderHeader = () => {
 	// полученную разметку вставить на страницу с помощью innerHTML в .calendar__header
 	// в дата атрибуте каждой ячейки должно хранить для какого часа эта ячейка
 
-	const a = generateWeekRange(getItem('displayedWeekStart'))
+	const a = generateWeekRange(new Date(getItem('displayedWeekStart')));
+	const b = a
 		.map(
 			(weekNumber) => `<div 
                             class = 'calendar__day-label day-label'>
@@ -24,7 +25,7 @@ export const renderHeader = () => {
 							</div>`,
 		)
 		.join('');
-	calHeader.innerHTML = a;
+	calHeader.innerHTML = b;
 };
 
 // при клике на кнопку "Create" открыть модальное окно с формой для создания события

@@ -1,6 +1,7 @@
 import { getItem } from '../common/storage.js';
 import { getDateTime } from '../common/time.utils.js';
 import { addZero } from './createNumbersArray.js';
+import { onDeleteEvent } from '../events/events.js';
 
 const modalElem = document.querySelector('.modal');
 const modalContentElem = document.querySelector('.modal__content');
@@ -46,38 +47,40 @@ function onClickInsideModal(event) {
 
 export function openModalChange() {
 	modalElem.classList.remove('hidden');
-	const a = getItem('events').find(
-		(elem) => elem.id === getItem('eventIdToDelete'),
-	);
-	changeTitle.value = a.title;
+	const a = getItem('events') || [];
+	const finded = a.find((elem) => elem.id === getItem('eventIdToDelete'));
+	changeTitle.value = finded.title;
 	changeTitle.setAttribute('readonly', 'readonly');
-	changeDescription.value = a.description;
+	changeDescription.value = finded.description;
 	changeDescription.setAttribute('readonly', 'readonly');
-	let monthAddZero = a.start.getMonth() + 1;
+	let monthAddZero = new Date(finded.start).getMonth() + 1;
 	monthAddZero = addZero(monthAddZero);
-	let dayAddZero = a.start.getDate();
+	let dayAddZero = new Date(finded.start).getDate();
 	dayAddZero = addZero(dayAddZero);
-	changeDate.value = `${a.start.getFullYear()}-${monthAddZero}-${dayAddZero}`;
+	changeDate.value = `${new Date(
+		finded.start,
+	).getFullYear()}-${monthAddZero}-${dayAddZero}`;
 	changeDate.setAttribute('readonly', 'readonly');
-	let startMinutesAddZero = a.start.getMinutes();
+	let startMinutesAddZero = new Date(finded.start).getMinutes();
 	startMinutesAddZero = addZero(startMinutesAddZero);
-	let startHoursAddZero = a.start.getHours();
+	let startHoursAddZero = new Date(finded.start).getHours();
 	startHoursAddZero = addZero(startHoursAddZero);
 	document.querySelector(
 		'input[name = startTime]',
 	).value = `${startHoursAddZero}:${startMinutesAddZero}`;
 	let startTime = document.querySelector('input[name = startTime]').value;
 
-	a.start = getDateTime(changeDate.value, startTime);
-	let endMinutesAddZero = a.end.getMinutes();
+	finded.start = getDateTime(changeDate.value, startTime);
+	let endMinutesAddZero = new Date(finded.end).getMinutes();
 	endMinutesAddZero = addZero(endMinutesAddZero);
-	let endHoursAddZero = a.end.getHours();
+	let endHoursAddZero = new Date(finded.end).getHours();
 	endHoursAddZero = addZero(endHoursAddZero);
 	document.querySelector(
 		'input[name = endTime]',
 	).value = `${endHoursAddZero}:${endMinutesAddZero}`;
 	let endTime = document.querySelector('input[name = endTime]').value;
-	a.end = getDateTime(changeDate.value, endTime);
+	finded.end = getDateTime(changeDate.value, endTime);
+	onDeleteEvent();
 }
 
 export function openModalSmallTask(event) {
