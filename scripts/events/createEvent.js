@@ -1,8 +1,13 @@
-import { getItem, setItem } from '../common/storage.js';
+import { setItem, getItem } from '../common/storage.js';
 import { renderEvents } from './events.js';
 import { getDateTime } from '../common/time.utils.js';
 import { closeModal } from '../common/modal.js';
-const eventFormElem = document.querySelector('.event-form');
+import {
+	createEvent,
+	getEventsList,
+	updateEvent,
+} from '../common/eventsGateWays.js';
+
 const closeBtn = document.querySelector('.create-event__close-btn');
 
 function clearEventForm() {
@@ -21,16 +26,7 @@ function onCloseEventForm() {
 	clearEventForm();
 	closeModal();
 }
-function onCreateEvent(event) {
-	// задача этой ф-ции только добавить новое событие в массив событий, что хранится в storage
-	// создавать или менять DOM элементы здесь не нужно. Этим займутся другие ф-ции
-	// при подтверждении формы нужно считать данные с формы
-	// с формы вы получите поля date, startTime, endTime, title, description
-	// на основе полей date, startTime, endTime нужно посчитать дату начала и окончания события
-	// date, startTime, endTime - строки. Вам нужно с помощью getDateTime из утилит посчитать start и end объекта события
-	// полученное событие добавляем в массив событий, что хранится в storage
-	// закрываем форму
-	// и запускаем перерисовку событий с помощью renderEvents
+export function onCreateEvent(event) {
 	event.preventDefault();
 	const title = document.querySelector('input[name = title]').value;
 	const date = document.querySelector('input[name = date]').value;
@@ -47,16 +43,25 @@ function onCreateEvent(event) {
 	const description = document.querySelector(
 		'textarea[name = description]',
 	).value;
-	const id = `0.${Date.parse(start)}`;
 
-	const c = getItem('events') || [];
-	c.push({ id, start, end, title, description });
-	setItem('events', c);
-	onCloseEventForm();
-	renderEvents();
+	const newEvent = { start, end, title, description };
+
+	if (getItem('eventIdToDelete') !== null) {
+		updateEvent(getItem('eventIdToDelete'), newEvent)
+			.then(() => getEventsList())
+			.then((newTasksList) => {
+				setItem('eventsList', newTasksList);
+				renderEvents();
+			});
+	} else {
+		createEvent(newEvent)
+			.then(() => getEventsList())
+			.then((newTaskList) => {
+				setItem('eventsList', newTaskList);
+				onCloseEventForm();
+				renderEvents();
+			});
+	}
 }
 
-export function initEventForm() {}
-
-eventFormElem.addEventListener('submit', onCreateEvent);
 closeBtn.addEventListener('click', onCloseEventForm);

@@ -1,15 +1,14 @@
 import { getItem, setItem } from '../common/storage.js';
-import { openPopup, closePopup } from '../common/popup.js';
+import { closePopup, openPopup } from '../common/popup.js';
 import { generateWeekRange } from '../common/time.utils.js';
 import { openModalSmallTask } from '../common/modal.js';
 import { redLine, anim } from '../calendar/timescale.js';
+import { deleteEvent, getEventsList } from '../common/eventsGateWays.js';
 
 const weekElem = document.querySelector('.calendar__week');
 const deleteEventBtn = document.querySelector('.delete-event-btn');
 
 function handleEventClick(event) {
-	// если произошел клик по событию, то нужно паказать попап с кнопкой удаления
-	// установите eventIdToDelete с id события в storage
 	if (
 		event.target.hasAttribute('data-id') ||
 		event.target.classList.contains('task__touch')
@@ -37,19 +36,13 @@ function handleEventClick(event) {
 }
 
 function removeEventsFromCalendar() {
-	// ф-ция для удаления всех событий с календаря
 	document
 		.querySelectorAll('.task')
 		.forEach((elem) => elem.parentNode.removeChild(elem));
+	setItem('eventIdToDelete', null);
 }
 
 const createEventElement = (event) => {
-	// ф-ция создает DOM элемент события
-	// событие должно позиционироваться абсолютно внутри нужной ячейки времени внутри дня
-	// нужно добавить id события в дата атрибут
-	// здесь для создания DOM элемента события используйте document.createElement
-	// let timeSLot = document.querySelector(`div[data-day = ''`);
-
 	event.map(({ id, start, end, description, title }) => {
 		const aStart = new Date(start);
 		const aEnd = new Date(end);
@@ -92,7 +85,7 @@ const createEventElement = (event) => {
 
 export const renderEvents = () => {
 	removeEventsFromCalendar();
-	const b = getItem('events') || [];
+	const b = getItem('eventsList') || [];
 	createEventElement(
 		b.filter((elem) =>
 			generateWeekRange(getItem('displayedWeekStart'))
@@ -112,40 +105,31 @@ export const renderEvents = () => {
 		redLine();
 		anim();
 	}
-
-	// достаем из storage все события и дату понедельника отображаемой недели
-	// фильтруем события, оставляем только те, что входят в текущую неделю
-	// создаем для них DOM элементы с помощью createEventElement
-	// для каждого события находим на странице временную ячейку (.calendar__time-slot)
-	// и вставляем туда событие
-	// каждый день и временная ячейка должно содержать дата атрибуты, по которым можно будет найти нужную временную ячейку для события
-	// не забудьте удалить с календаря старые события перед добавлением новых
 };
 
 export function onDeleteEvent() {
-	// достаем из storage массив событий и eventIdToDelete
-	// удаляем из массива нужное событие и записываем в storage новый массив
-	// закрыть попап
-	// перерисовать события на странице в соответствии с новым списком событий в storage (renderEvents)
-	let findedElem = getItem('events').find(
+	let findedElem = getItem('eventsList').find(
 		(elem) => elem.id === getItem('eventIdToDelete'),
 	);
+
 	if (new Date(findedElem.start).getDate() === new Date().getDate()) {
 		let from =
 			new Date(findedElem.start).getHours() * 60 +
 			new Date(findedElem.start).getMinutes();
 		let now = new Date().getHours() * 60 + new Date().getMinutes();
 
-		if (from - now < 15) {
+		if (from - now < 15 && from - now > 0) {
 			return alert(`Can't delete this task. It will be in 15 minutes`);
 		}
 	}
-	setItem(
-		'events',
-		getItem('events').filter((elem) => elem.id !== getItem('eventIdToDelete')),
-	);
-	closePopup();
-	renderEvents();
+
+	deleteEvent(getItem('eventIdToDelete'))
+		.then(() => getEventsList())
+		.then((newTasksList) => {
+			setItem('eventsList', newTasksList);
+			closePopup();
+			renderEvents();
+		});
 }
 
 deleteEventBtn.addEventListener('click', onDeleteEvent);

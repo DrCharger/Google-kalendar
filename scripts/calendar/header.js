@@ -1,12 +1,9 @@
 import { openModal } from '../common/modal.js';
 import { getItem } from '../common/storage.js';
-import { setItem } from '../common/storage.js';
-import { getStartOfWeek } from '../common/time.utils.js';
 import { generateWeekRange } from '../common/time.utils.js';
 
 const daysOfWeek = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
 const calHeader = document.querySelector('.calendar__header');
-setItem('displayedWeekStart', getStartOfWeek(new Date()));
 const createModalBtn = document.querySelector('.create-event-btn');
 
 export const renderHeader = () => {

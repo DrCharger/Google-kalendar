@@ -35,7 +35,9 @@ const endTime = 1440 - start;
 
 export const anim = () => {
 	const timeLine = document.querySelector('.red__line');
+	timeLine.style.top = start + 'px';
 	let timer = setInterval(function () {
+		timeLine.style.top = start;
 		let timePassed =
 			new Date().getHours() * 60 + new Date().getMinutes() - start;
 		timeLine.style.top = start + timePassed + 'px';
@@ -43,5 +45,5 @@ export const anim = () => {
 			clearInterval(timer);
 			return;
 		}
-	}, 50);
+	}, 60000);
 };

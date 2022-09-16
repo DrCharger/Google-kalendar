@@ -1,4 +1,4 @@
-import { openModalChange } from '../common/modal.js';
+import { openModalChange } from '../events/changer.js';
 
 const popupElem = document.querySelector('.popup');
 const popupContentElem = document.querySelector('.popup__content');
