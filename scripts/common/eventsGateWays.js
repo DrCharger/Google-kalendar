@@ -1,7 +1,12 @@
 const baseUrl = 'https://6319a5136b4c78d91b3fe284.mockapi.io/api/v1/events';
 
 export const getEventsList = () => {
-	return fetch(baseUrl).then((response) => response.json());
+	return fetch(baseUrl).then((response) => {
+		if (response.ok) {
+			return response.json();
+		}
+		throw new Error('Internal Server Error');
+	});
 };
 
 export const createEvent = (eventData) => {
