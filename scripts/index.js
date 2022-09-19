@@ -8,16 +8,16 @@ import { renderEvents } from './events/events.js';
 import { getEventsList } from './common/eventsGateWays.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-	// инициализация всех элементов
-
-	getEventsList().then((eventList) => {
-		setItem('displayedWeekStart', getStartOfWeek(new Date()));
-		setItem('eventsList', eventList);
-		renderTimescale();
-		renderWeek();
-		renderHeader();
-		initNavigation();
-	});
+	getEventsList()
+		.then((eventList) => {
+			setItem('displayedWeekStart', getStartOfWeek(new Date()));
+			setItem('eventsList', eventList);
+			renderTimescale();
+			renderWeek();
+			renderHeader();
+			initNavigation();
+		})
+		.catch((err) => alert(err.message));
 });
 
 const onStorageChange = (e) => {
